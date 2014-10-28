@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import random
 import unittest2 as unittest
 
 from cafe.drivers.unittest.decorators import tags
 from cloudcafe.common.tools.datagen import rand_name
-
 from cloudroast.images.fixtures import ImagesFixture
 
 
@@ -157,8 +155,7 @@ class TestImageItemQuotas(ImagesFixture):
         """
 
         if api_name.lower() == 'add_member':
-            member_id = rand_name('member') + str(random.randint(9999, 100000))
-            api_args = dict(image_id=image.id_, member_id=member_id)
+            api_args = dict(image_id=image.id_, member_id=rand_name('member'))
         elif api_name.lower() == 'add_tag':
             api_args = dict(image_id=image.id_, tag=rand_name('tag'))
         else:
