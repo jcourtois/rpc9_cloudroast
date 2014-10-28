@@ -19,6 +19,7 @@ from random import shuffle
 from cafe.drivers.unittest.datasets import DatasetList
 from cafe.drivers.unittest.decorators import memoized
 from cloudcafe.compute.composites import ImagesComposite
+from cloudcafe.compute.composites import _ComputeAuthComposite
 
 from cloudroast.blockstorage.datasets import DatasetGeneratorError
 from cloudroast.blockstorage.volumes_api.datasets import VolumesDatasets
@@ -28,7 +29,7 @@ class ComputeDatasets(VolumesDatasets):
     """Collection of dataset generators for blockstorage-images integration
     data driven tests
     """
-    images = ImagesComposite()
+    images = ImagesComposite(_ComputeAuthComposite())
 
     @classmethod
     @memoized
