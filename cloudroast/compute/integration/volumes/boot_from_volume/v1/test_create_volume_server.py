@@ -23,8 +23,14 @@ from cloudroast.compute.instance_actions.api.test_create_server import \
     CreateServerTest
 from cloudroast.compute.integration.volumes.boot_from_volume.v2.test_create_volume_server import \
     CreateVolumeServerTest
+from cloudcafe.blockstorage.volumes_api.common.config import \
+    VolumesAPIConfig 
+from unittest import skipUnless
+version_under_test=VolumesAPIConfig().version_under_test
 
-
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class ServerFromVolumeV1CreateServerTests(ServerFromVolumeV1Fixture,
                                           CreateServerTest,
                                           CreateVolumeServerTest):

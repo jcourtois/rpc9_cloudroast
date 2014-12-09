@@ -51,6 +51,7 @@ class ServerRescueTests(object):
         rescue_server_response = self.server_behaviors.wait_for_server_status(
             self.server.id, 'RESCUE')
         rescue_server = rescue_server_response.entity
+        #self.server_behaviors.force_assign_floating_ip_from_pool(rescue_server.id)
         rescue_server.admin_pass = changed_password
 
         # We cannot access rescued Windows servers, so skip
@@ -61,12 +62,13 @@ class ServerRescueTests(object):
             # Verify if original disks plus rescue disk are attached
             remote_client = self.server_behaviors.get_remote_instance_client(
                 rescue_server, self.servers_config,
-                key=self.key.private_key)
+                password=rescue_server.admin_pass, auth_strategy='password')
             disks = remote_client.get_all_disks()
             self.assertEqual(len(disks.keys()), original_num_disks + 1)
 
         # Exit rescue mode
         unrescue_response = self.rescue_client.unrescue(self.server.id)
+        from IPython import embed; embed()
         self.assertEqual(unrescue_response.status_code, 202)
         self.server_behaviors.wait_for_server_status(self.server.id, 'ACTIVE')
         remote_client = self.server_behaviors.get_remote_instance_client(

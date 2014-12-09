@@ -60,7 +60,7 @@ class CreateVolumeServerfromSnapshotTest(ServerFromVolumeV2Fixture):
         self.server_response = self.boot_from_volume_client.create_server(
             block_device_mapping_v2=self.block_data,
             flavor_ref=self.flavors_config.primary_flavor,
-            name=rand_name("server"))
+            name=rand_name("server"), security_groups=self.security_groups_config.default_security_group)
         # Verify response code is correct
         self.assertEqual(self.server_response.status_code, 202)
         # Verify the server reaches active status
@@ -83,7 +83,7 @@ class CreateVolumeServerfromSnapshotTest(ServerFromVolumeV2Fixture):
         self.server_response = self.boot_from_volume_client.create_server(
             block_device_mapping_v2=self.block_data,
             flavor_ref=self.flavors_config.primary_flavor,
-            name=rand_name("server"))
+            name=rand_name("server"), security_groups=self.security_groups_config.default_security_group)
         # Verify response code is correct
         self.assertEqual(self.server_response.status_code, 202)
         # Verify the server reaches active status

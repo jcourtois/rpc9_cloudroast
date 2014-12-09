@@ -37,7 +37,7 @@ class ServerFromVolumeV2RebuildTests(ServerFromVolumeV2Fixture,
         response = cls.flavors_client.get_flavor_details(cls.flavor_ref)
         wait_response = cls.server_behaviors.wait_for_server_status(
             created_server.id, NovaServerStatusTypes.ACTIVE)
-        cls.server_behaviors._create_and_assign_floating_ip(created_server.id)
+        cls.server_behaviors.force_assign_floating_ip_from_pool(created_server.id)
 
         cls.flavor = response.entity
         cls.rebuild_and_await()

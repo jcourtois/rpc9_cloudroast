@@ -37,7 +37,7 @@ can_resize_down = (
                            ComputeHypervisors.LXC_LIBVIRT,
                            ComputeHypervisors.KVM])
 
-@unittest.skipUnless(resize_enabled, 'Resize not enabled for this flavor class.')
+@unittest.skipUnless(can_resize_down, 'Resize not down is not supported due to your choice of hypervisor or flavor.')
 class ResizeServerDownConfirmTests(object):
 
     compute_config = ComputeConfig()
@@ -130,7 +130,7 @@ class ResizeServerDownConfirmTests(object):
             self.confirm_resize_resp.headers['x-compute-request-id'])
 
 
-@unittest.skipUnless(resize_enabled, 'Resize not enabled for this flavor class.')
+@unittest.skipUnless(can_resize_down, 'Resize not down is not supported due to your choice of hypervisor or flavor.')
 class ResizeDownConfirmBaseFixture(object):
 
     @classmethod
@@ -155,7 +155,7 @@ class ResizeDownConfirmBaseFixture(object):
             self.flavor_ref).entity
 
 
-@unittest.skipUnless(resize_enabled, 'Resize not enabled for this flavor class.')
+@unittest.skipUnless(can_resize_down, 'Resize not down is not supported due to your choice of hypervisor or flavor.')
 class ServerFromImageResizeServerDownConfirmTests(
         ServerFromImageFixture,
         ResizeServerDownConfirmTests,

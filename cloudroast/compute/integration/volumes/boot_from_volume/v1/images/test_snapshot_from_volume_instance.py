@@ -20,8 +20,14 @@ from cloudcafe.compute.common.types import NovaImageStatusTypes
 from cloudroast.compute.instance_actions.api.test_create_image \
     import CreateImageTest
 from cloudroast.compute.fixtures import ServerFromVolumeV1Fixture
+from cloudcafe.blockstorage.volumes_api.common.config import \
+    VolumesAPIConfig 
+from unittest import skipUnless
+version_under_test=VolumesAPIConfig().version_under_test
 
-
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class ServerFromVolumeV1CreateImageTests(ServerFromVolumeV1Fixture,
                                          CreateImageTest):
 

@@ -74,6 +74,7 @@ class ServerFromVolumeV2CreateServerTests(ServerFromVolumeV2Fixture,
         cls.name = rand_name("server")
         cls.metadata = {'meta_key_1': 'meta_value_1',
                         'meta_key_2': 'meta_value_2'}
+        files=None
         networks = None
         if cls.servers_config.default_network:
             networks = [{'uuid': cls.servers_config.default_network}]
@@ -84,8 +85,8 @@ class ServerFromVolumeV2CreateServerTests(ServerFromVolumeV2Fixture,
             cls.file_path = separator.join(
                 [cls.servers_config.default_file_path, 'test.txt'])
             files = [{'path': cls.file_path, 'contents': base64.b64encode(
-                cls.file_contents)}]
-            security_groups=[{'name': cls.security_groups_config.default_security_group}]
+                cls.file_contents)}]     
+        security_groups=[{'name': cls.security_groups_config.default_security_group}]
         cls.key = cls.keypairs_client.create_keypair(rand_name("key")).entity
         cls.resources.add(cls.key.name,
                           cls.keypairs_client.delete_keypair)
@@ -106,7 +107,7 @@ class ServerFromVolumeV2CreateServerTests(ServerFromVolumeV2Fixture,
                           cls.servers_client.delete_server)
         wait_response = cls.server_behaviors.wait_for_server_status(
             created_server.id, NovaServerStatusTypes.ACTIVE)
-        cls.server_behaviors._create_and_assign_floating_ip(created_server.id)
+        cls.server_behaviors.force_assign_floating_ip_from_pool(created_server.id)
         wait_response.entity.admin_pass = created_server.admin_pass
         cls.flavor = cls.flavors_client.get_flavor_details(
             cls.flavor_ref).entity

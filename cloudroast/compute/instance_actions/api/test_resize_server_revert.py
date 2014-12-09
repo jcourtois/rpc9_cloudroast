@@ -33,7 +33,8 @@ resize_enabled = flavors_config.resize_enabled
 can_resize = (
     resize_enabled
     and hypervisor not in [ComputeHypervisors.IRONIC,
-                           ComputeHypervisors.LXC_LIBVIRT])
+                           ComputeHypervisors.LXC_LIBVIRT,
+                           ComputeHypervisors.KVM])
 
 
 class ResizeServerUpRevertTests(object):
@@ -142,7 +143,7 @@ class ResizeUpRevertBaseFixture(object):
 
 
 @unittest.skipUnless(
-    resize_enabled, 'Resize not enabled for this flavor class.')
+    can_resize, 'Resize not enabled for this flavor class.')
 class ServerFromImageResizeServerUpRevertTests(ServerFromImageFixture,
                                                ResizeServerUpRevertTests,
                                                ResizeUpRevertBaseFixture):

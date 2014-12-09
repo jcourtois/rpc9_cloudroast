@@ -21,7 +21,10 @@ from cloudcafe.common.tools.datagen import rand_name
 from cloudroast.compute.instance_actions.api.test_resize_server_confirm \
     import ResizeServerUpConfirmTests, ResizeUpConfirmBaseFixture
 from cloudroast.compute.fixtures import ServerFromVolumeV1Fixture
-
+from cloudcafe.blockstorage.volumes_api.common.config import \
+    VolumesAPIConfig 
+from unittest import skipUnless
+version_under_test=VolumesAPIConfig().version_under_test
 
 @unittest.skip('Resize not enabled for boot from volume')
 class ServerFromVolumeV1ResizeUpConfirmTests(ServerFromVolumeV1Fixture,

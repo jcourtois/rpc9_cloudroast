@@ -37,7 +37,7 @@ class CreateVolumeServerNegativeTest(ServerFromVolumeV2Fixture):
             self.boot_from_volume_client.create_server(
                 block_device_mapping_v2=self.block_data,
                 flavor_ref=self.flavors_config.primary_flavor,
-                name=rand_name("server"))
+                name=rand_name("server"), security_groups=self.security_groups_config.default_security_group)
 
     @tags(type='smoke', net='no')
     def test_source_type_invalid(self):
@@ -53,7 +53,7 @@ class CreateVolumeServerNegativeTest(ServerFromVolumeV2Fixture):
             self.boot_from_volume_client.create_server(
                 block_device_mapping_v2=self.block_data,
                 flavor_ref=self.flavors_config.primary_flavor,
-                name=rand_name("server"))
+                name=rand_name("server"), security_groups=self.security_groups_config.default_security_group)
 
     @tags(type='smoke', net='no')
     def test_boot_from_concurent_sources_with_image_ref_invalid(self):
@@ -71,6 +71,7 @@ class CreateVolumeServerNegativeTest(ServerFromVolumeV2Fixture):
                 block_device_mapping_v2=self.block_data,
                 flavor_ref=self.flavors_config.primary_flavor,
                 name=rand_name("server"),
+                security_groups=self.security_groups_config.default_security_group,
                 image_ref=self.image_ref)
 
     @tags(type='smoke', net='no')
@@ -87,4 +88,5 @@ class CreateVolumeServerNegativeTest(ServerFromVolumeV2Fixture):
             self.boot_from_volume_client.create_server(
                 block_device_mapping_v2=self.block_data,
                 flavor_ref='invalid',
+                security_groups=self.security_groups_config.default_security_group,
                 name=rand_name("server"))

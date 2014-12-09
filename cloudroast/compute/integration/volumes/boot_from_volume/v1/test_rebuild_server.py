@@ -20,7 +20,15 @@ from cloudroast.compute.instance_actions.api.test_rebuild_server \
     import RebuildServerTests, RebuildBaseFixture
 from cloudroast.compute.fixtures import ServerFromVolumeV1Fixture
 
+from cloudcafe.blockstorage.volumes_api.common.config import \
+    VolumesAPIConfig 
 
+from unittest import skipUnless
+version_under_test=VolumesAPIConfig().version_under_test
+
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class ServerFromVolumeV1RebuildTests(ServerFromVolumeV1Fixture,
                                      RebuildBaseFixture,
                                      RebuildServerTests):

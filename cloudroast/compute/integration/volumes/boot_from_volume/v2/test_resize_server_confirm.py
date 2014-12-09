@@ -38,5 +38,5 @@ class ServerFromVolumeV2ResizeUpConfirmTests(ServerFromVolumeV2Fixture,
         created_server = cls.create_server(key_name=cls.key.name)
         wait_response = cls.server_behaviors.wait_for_server_status(
             created_server.id, NovaServerStatusTypes.ACTIVE)
-        cls.server_behaviors._create_and_assign_floating_ip(created_server.id)
+        cls.server_behaviors.force_assign_floating_ip_from_pool(created_server.id)
         cls.resize_up_and_confirm()

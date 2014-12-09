@@ -17,10 +17,15 @@ limitations under the License.
 from cafe.drivers.unittest.decorators import tags
 from cloudcafe.common.tools.datagen import rand_name
 from cloudcafe.compute.common.types import NovaServerStatusTypes
-
 from cloudroast.compute.fixtures import ServerFromVolumeV1Fixture
+from cloudcafe.blockstorage.volumes_api.common.config import \
+    VolumesAPIConfig 
+from unittest import skipUnless
+version_under_test=VolumesAPIConfig().version_under_test
 
-
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class CreateVolumeServerfromSnapshotTest(ServerFromVolumeV1Fixture):
 
     @classmethod

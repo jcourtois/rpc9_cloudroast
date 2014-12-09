@@ -43,7 +43,7 @@ class VolumeActions(VolumesTestFixture):
             availability_zone=availability_zone,
             metadata=metadata)
 
-        self.assertExactResponseStatus(resp, 200, msg='Volume create failed')
+        self.assertResponseStatusInRange(resp, 200, 209, msg='Volume create failed')
         self.assertResponseIsDeserialized(resp)
         volume = resp.entity
 
@@ -75,8 +75,8 @@ class VolumeActions(VolumesTestFixture):
     def ddtest_get_volume_info(self, volume_type_name, volume_type_id):
         volume = self.new_volume(vol_type=volume_type_id)
         resp = self.volumes.client.get_volume_info(volume.id_)
-        self.assertExactResponseStatus(
-            resp, 200, msg='Get volume info call failed')
+        self.assertResponseStatusInRange(resp, 200, 209,
+                                   msg='Get volume info call failed')
         self.assertResponseIsDeserialized(resp)
         volume_info = resp.entity
 
@@ -99,8 +99,8 @@ class VolumeActions(VolumesTestFixture):
     def ddtest_list_volumes(self, volume_type_name, volume_type_id):
         volume = self.new_volume(vol_type=volume_type_id)
         resp = self.volumes.client.list_all_volumes()
-        self.assertExactResponseStatus(
-            resp, 200, msg='Get volume list call failed')
+        self.assertResponseStatusInRange(resp, 200, 209,
+                                   msg='Get volume list call failed')
         self.assertResponseIsDeserialized(resp)
         volume_list = resp.entity
 
@@ -115,8 +115,8 @@ class VolumeActions(VolumesTestFixture):
     def ddtest_list_volume_details(self, volume_type_name, volume_type_id):
         volume = self.new_volume(vol_type=volume_type_id)
         resp = self.volumes.client.list_all_volumes_info()
-        self.assertExactResponseStatus(
-            resp, 200, msg='Get volume list call failed')
+        self.assertResponseStatusInRange(resp, 200, 209,
+            msg='Get volume list call failed')
         self.assertResponseIsDeserialized(resp)
         volume_list = resp.entity
 

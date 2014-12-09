@@ -22,8 +22,14 @@ from cloudcafe.compute.common.exceptions import ItemNotFound
 from cloudroast.compute.fixtures import ServerFromVolumeV1Fixture
 from cloudroast.compute.instance_actions.api.test_delete_server import \
     DeleteServersTest
+from cloudcafe.blockstorage.volumes_api.common.config import \
+    VolumesAPIConfig 
+from unittest import skipUnless
+version_under_test=VolumesAPIConfig().version_under_test
 
-
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class AutoDeleteVolumeServersTest(object):
 
     @tags(type='smoke', net='no')
@@ -33,6 +39,9 @@ class AutoDeleteVolumeServersTest(object):
             self.blockstorage_behavior.client.delete_volume(self.volume.id_)
 
 
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class PersistentDeleteVolumeServersTest(object):
 
     @tags(type='smoke', net='no')
@@ -61,6 +70,9 @@ class PersistentDeleteVolumeServersTest(object):
         self.assertTrue(result)
 
 
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class ServerFromVolumeV1AutoDeleteServerTests(
         ServerFromVolumeV1Fixture,
         DeleteServersTest,
@@ -74,6 +86,9 @@ class ServerFromVolumeV1AutoDeleteServerTests(
         cls.server_behaviors.wait_for_server_to_be_deleted(cls.server.id)
 
 
+@skipUnless(version_under_test==1,
+            'Version under test is cinder v{}; test only applicable '
+            'when testing cinder v1'.format(version_under_test))
 class ServerFromVolumeV1PersistentDeleteServerTests(
         ServerFromVolumeV1Fixture,
         PersistentDeleteVolumeServersTest):

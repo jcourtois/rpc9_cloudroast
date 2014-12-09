@@ -55,9 +55,9 @@ class SnapshotActions(VolumesTestFixture):
         resp = self.volumes.client.create_snapshot(
             volume.id_, display_name=snapshot_name,
             display_description=snapshot_description, force_create=True)
-
-        self.assertExactResponseStatus(
-            resp, 200, msg='Volume Snapshot create failed')
+        
+        self.assertResponseStatusInRange(
+            resp, 200, 209, msg='Volume Snapshot create failed')
         self.assertResponseIsDeserialized(resp)
         snapshot = resp.entity
         self.assertEquals(snapshot.volume_id, volume.id_)

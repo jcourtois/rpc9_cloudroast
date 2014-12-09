@@ -46,7 +46,7 @@ class DeleteVolumeServersTest(object):
         server_response = self.boot_from_volume_client.create_server(
             block_device_mapping_v2=block_data,
             flavor_ref=self.flavors_config.primary_flavor,
-            name=rand_name("server"))
+            name=rand_name("server"), security_groups=self.security_groups_config.default_security_group)
         server = server_response.entity
         # Verify the server reaches active status
         self.server_behaviors.wait_for_server_status(
